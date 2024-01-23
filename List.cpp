@@ -334,5 +334,23 @@ List<T>		List<T>::operator&	( const List<T> &mylist ){
 			}
 			check = check->next;
 		}
+		if(mylist.contains(check->item) == 1){
+				ret.insert(check->item);
+			}
+	return ret;
+}
+template  <typename T>
+List<T>		List<T>::operator-	( const List<T> &mylist ){
+	List<T> ret;
+		Node * check = head;
+		while (check->next != NULL){
+			if(mylist.contains(check->item) == 0){
+				ret.insert(check->item);
+			}
+			check = check->next;
+		}
+		if(mylist.contains(check->item) == 0){
+				ret.insert(check->item);
+			}
 	return ret;
 }
