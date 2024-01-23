@@ -31,9 +31,8 @@ public:
 		   ~List		( void );
 List<T>		operator=	( const List<T> &mylist );
 string		to_string	( void ) const;	
-void		append		( const T &item	);
+void		insert		( const T &item	);
 T &		operator[]	( int index );
-void		insert		( const T &item, int index );
 void		remove		( int index );
 List<T>		operator+	( const List<T> &mylist ) const;
 int		length		( void ) const;

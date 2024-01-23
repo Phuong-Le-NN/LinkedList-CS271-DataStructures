@@ -44,7 +44,7 @@ template  <typename T>
 	{
 		
 		i = ptr2->item;
-		append(i);
+		insert(i);
 		ptr2 = ptr2->next;
 		
 	}
@@ -81,7 +81,7 @@ List<T>		List<T>::operator=	( const List<T> &mylist )
 	{
 		
 		i = ptr2->item;
-		append(i);
+		this->insert(i);
 		ptr2 = ptr2->next;
 		
 	}
@@ -90,36 +90,29 @@ List<T>		List<T>::operator=	( const List<T> &mylist )
 }
 
 //==========================================================================
-//Append Method
+//Insert Method
 // This function adds a new item onto the end of the list.
 // Parameters: An element of the same data type
 // Return value: none
 //==========================================================================
 template  <typename T>
-void		List<T>::append		( const T &item	)
+void		List<T>::insert		( const T &item	)
 {
+	if (this->contains(item) == true)
+		return;
 	// Step 1: creat new memory for new link
 	Node * ptr = new Node;
 	
 	// Step 2: put data into data field of new link
 	ptr->item = item;
 	
-	// Step 4: set last link to null
-	ptr->next = NULL;
+	// Step 4: set new link pointing to the rest of the list
+	ptr->next = head;
 	
 	// Step 3: insert ptr to the appropriate place
-	if (head == NULL)
 	{
+		ptr->next = head;
 		head = ptr;
-	}
-	else
-	{
-		Node * check = head;
-		while (check->next != NULL) 
-		{
-			check = check->next;	
-		}
-		check->next = ptr;
 	}
 }
 //==========================================================================
@@ -143,64 +136,7 @@ T &		List<T>::operator[]	( int index )
 	}
 	return ptr->item;
 }
-//==========================================================================
-// Insert Method
-// This function inserts a new node in the list at the specified position
-// Parameters: An element of the same data type and the integer position index
-// Return value: none
-//==========================================================================
-template  <typename T>
-void		List<T>::insert		( const T &item, int index )
-{
-	if (index > length() || index < 0)
-	{
-		cout<<"Error: index out of range"<<endl;
-		exit(1);
-	}
-	
 
-	
-	if (head != NULL)
-	{	
-		if (index == 0)
-		{
-			Node *temp = head;
-			head = new Node;
-			head->item = item;
-			head->next = temp;
-			
-		}
-		else
-		{
-			Node *ptr;
-			ptr = head;
-			//go to the index, temp will be the address of the node right before the index
-			for (int i = 0; i < index - 1; i++)
-			{
-				ptr = ptr->next;
-			}
-		
-			Node *temp;
-			temp = ptr->next;
-			//creat new node
-			ptr->next = new Node;
-			//put data into the node
-			ptr = ptr->next;
-			
-			ptr->next = temp;
-			ptr->item = item;
-		}
-	}
-	else
-	{
-		//creat new node
-		head = new Node;
-		//put data into the node
-		head->item = item;
-		head->next = NULL;
-	}
-	
-}
 //==========================================================================
 // Remove method
 // This function removes the item at the specified position.
@@ -250,7 +186,8 @@ List<T>		List<T>::operator+	( const List<T> &mylist ) const
 	while ( ptr2 != NULL)
 	{
 		i = ptr2->item;
-		l3.append(i);
+		if (l3.contains(i) == false)
+			l3.insert(i);
 		ptr2 = ptr2->next;
 		
 	}
