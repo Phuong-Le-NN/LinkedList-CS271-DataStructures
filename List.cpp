@@ -305,12 +305,18 @@ void		List<T>::clear		( void )
 		head = ptr;
 	}
 }
+//==========================================================================
+// contains method
+//
+//
+//
+//==========================================================================
 template  <typename T>
-int		List<T>::contains (const T &myitem)
+bool		List<T>::contains (const T &myitem)	const
 {
 	if (head == NULL)
 	{
-		return 0;
+		return false;
 	}
 	else
 	{
@@ -318,30 +324,66 @@ int		List<T>::contains (const T &myitem)
 		while (check->next != NULL) 
 		{
 			if(check->item == myitem){
-				return 1;
+				return true;
 			}
 			check = check->next;	
 			if(check->item == myitem){
-				return 1;
+				return true;
 			}
 		}
 		
-		return 0;
+		return false;
 	}
 }
+//==========================================================================
+// Operator ==
+//
+//
+//
+//
+//
+//===================================================
 template  <typename T>
-int        List<T>::operator==    (const List<T> &mylist){
+bool        List<T>::operator==    (const List<T> &mylist)	const
+{
 	if(mylist.length() != this->length()){
-		return 0;
+		return false;
 	}
 	Node * check = mylist.head;
 	
 	while (check->next != NULL){
-		if(this->contains(check->item) == 0){
-			return 0;
+		if(this->contains(check->item) == false){
+			return false;
 		}
 		check = check->next;
 		
 	}
-	return 1;
+	return true;
+}
+
+//==========================================================================
+// Operator <=
+//
+//
+//
+//
+//
+//===================================================
+template  <typename T>
+bool	List<T>::operator<=    (const List<T> &mylist)	const
+{
+	if(mylist.length() < this->length()){
+		return false;
+	}
+	Node * check = this->head;
+	
+	while (check->next != NULL){
+		if(mylist.contains(check->item) == false)
+		{
+			return false;
+		}
+		check = check->next;
+		
+	}
+	return true;
 }
