@@ -41,7 +41,7 @@ void		clear		( void );
 bool 		contains    (const T &item ) const;
 bool		operator==    (const List<T> &mylist) const;
 bool		operator<=    (const List<T> &mylist) const;
-
+List<T>		operator&	( const List<T> &mylist );
 friend ostream & operator<< ( ostream &os, List<T> &mylist )
 {
 	Node *ptr = mylist.head;

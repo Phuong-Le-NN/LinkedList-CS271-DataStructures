@@ -324,3 +324,15 @@ bool	List<T>::operator<=    (const List<T> &mylist)	const
 	}
 	return true;
 }
+template  <typename T>
+List<T>		List<T>::operator&	( const List<T> &mylist ){
+	List<T> ret;
+		Node * check = head;
+		while (check->next != NULL){
+			if(mylist.contains(check->item) == 1){
+				ret.insert(check->item);
+			}
+			check = check->next;
+		}
+	return ret;
+}
