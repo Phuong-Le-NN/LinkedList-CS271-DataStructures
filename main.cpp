@@ -19,33 +19,35 @@ int main ( void )
 
     l1.append(1);
     l1.append(2);
-    l1.append(3);
+    l1.append(2);
     List<int> l2 = l1;
     List<int> l3;
     cout << "l1 = " << l1 << endl;
     cout << "l2 = " << l2 << endl;
-    
+
     l1.insert(4, 3);
     cout << "l1 = " << l1 << endl;
     cout << "l1.length() = " << l1.length() << endl;
-
+    
+    l2.append(100);
+    
     l1[2] = 10;
     cout << "l1 = " << l1 << endl;
     cout << "l1.length() = " << l1.length() << endl;
 
     //l2.remove(0);
-    cout << "l1 = remove = " << l1 << endl;
+    cout << "l1 = " << l1 << endl;
     cout << "l1.length() = " << l1.length() << endl;
-    
+
     l3 = l2 + l1;
     cout << "l3 = l2 + l1 = " << l3 << endl;
     cout << "l3.length() = " << l3.length() << endl;
 
 
-    l2.clear();
-    cout << "l2.clear() = " << l2 << endl;
-    cout << "l2.length() = " << l2.length() << endl;
-    cout << "l2 = " << l2 << endl;
+    //l2.clear();
+    //cout << "l2.clear() = " << l2 << endl;
+    //cout << "l2.length() = " << l2.length() << endl;
+    //cout << "l2 = " << l2 << endl;
 
     // Test the "doubling" ability of the list
     List<char> l5;
@@ -61,10 +63,9 @@ int main ( void )
     cout << "l6 = " << l6 << endl;
     cout << "l7 = " << l7 << endl;
     //test for contains
-    cout << "l7 = " << l5.contains(l7[3]) << endl;
     int result; 
-    result= l1==l2;
-    cout << "l7 = " << result << endl;
+    result = l2 <= l1;
+    cout << "l2 <= l1: " << result << endl;
 
     return 0;
 

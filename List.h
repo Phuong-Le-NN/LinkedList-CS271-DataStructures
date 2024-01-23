@@ -32,16 +32,17 @@ public:
 List<T>		operator=	( const List<T> &mylist );
 string		to_string	( void ) const;	
 void		append		( const T &item	);
-T &			operator[]	( int index );
+T &		operator[]	( int index );
 void		insert		( const T &item, int index );
 void		remove		( int index );
 List<T>		operator+	( const List<T> &mylist ) const;
-int			length		( void ) const;
+int		length		( void ) const;
 bool		isEmpty		( void ) const;
 void		clear		( void );
-int 		contains    (const T &item );
-int        operator==    (const List<T> &mylist);
-ist<T>		operator&	( const List<T> &mylist );
+bool 		contains    (const T &item ) const;
+bool		operator==    (const List<T> &mylist) const;
+bool		operator<=    (const List<T> &mylist) const;
+
 friend ostream & operator<< ( ostream &os, List<T> &mylist )
 {
 	Node *ptr = mylist.head;
