@@ -1,13 +1,13 @@
 //==============================================================
-// Matt Kretchmar
+// 
 // November 2023
 // main.cpp
-// This file is a driver for the List class.
+// This file is a driver for the Set class.
 //==============================================================
 
 #include <iostream>
 using namespace std;
-#include "List.h"
+#include "Set.h"
 
 //==============================================================
 // main
@@ -15,33 +15,33 @@ using namespace std;
 
 int main ( void )
 {
-    List<int> l1;
+    Set<int> s1;
 
-    l1.append(1);
-    l1.append(2);
-    l1.append(2);
-    List<int> l2 = l1;
-    List<int> l3;
-    cout << "l1 = " << l1 << endl;
-    cout << "l2 = " << l2 << endl;
-
-    l1.insert(4, 3);
-    cout << "l1 = " << l1 << endl;
-    cout << "l1.length() = " << l1.length() << endl;
+    s1.insert(1);
+    s1.insert(2);
+    s1.insert(2);
+    Set<int> s2 = s1;
+    Set<int> s3;
+    cout << "s1 = " << s1 << endl;
+    cout << "s2 = " << s2 << endl;
+	
+    s1.insert(2);
+    cout << "s1 = " << s1 << endl;
+    cout << "ls.length() = " << s1.length() << endl;
     
-    l2.append(100);
+    s2.insert(100);
     
-    l1[2] = 10;
-    cout << "l1 = " << l1 << endl;
-    cout << "l1.length() = " << l1.length() << endl;
+    s1[1] = 10;
+    cout << "s1 = " << s1 << endl;
+    cout << "s1.length() = " << s1.length() << endl;
 
-    //l2.remove(0);
-    cout << "l1 = " << l1 << endl;
-    cout << "l1.length() = " << l1.length() << endl;
+    //s2.remove(0);
+    cout << "s1 = " << s1 << endl;
+    cout << "s1.length() = " << s1.length() << endl;
 
-    l3 = l2 + l1;
-    cout << "l3 = l2 + l1 = " << l3 << endl;
-    cout << "l3.length() = " << l3.length() << endl;
+    s3 = s2 + s1;
+    cout << "s3 = s2 + s1 = " << s3 << endl;
+    cout << "s3.length() = " << s3.length() << endl;
 
 
     //l2.clear();
@@ -49,23 +49,23 @@ int main ( void )
     //cout << "l2.length() = " << l2.length() << endl;
     //cout << "l2 = " << l2 << endl;
 
-    // Test the "doubling" ability of the list
-    List<char> l5;
+    // Test the "doubling" ability of the set
+    Set<char> s5;
     for ( char c = 'a'; c <= 'g'; c++ )
-        l5.append(c);
-    List<char> l6 = l5;
+        s5.insert(c);
+    Set<char> s6 = s5;
     for ( char c = 'h'; c <= 'z'; c++ )
-        l5.append(c);
-    List<char> l7 = l5;
-    l5.remove(19);
+        s5.insert(c);
+    Set<char> s7 = s5;
+    s5.remove(19);
 
-    cout << "l5 = " << l5 << endl;
-    cout << "l6 = " << l6 << endl;
-    cout << "l7 = " << l7 << endl;
+    cout << "s5 = " << s5 << endl;
+    cout << "s6 = " << s6 << endl;
+    cout << "s7 = " << s7 << endl;
     //test for contains
     int result; 
-    result = l2 <= l1;
-    cout << "l2 <= l1: " << result << endl;
+    result = s2 <= s1;
+    cout << "s2 <= l1: " << result << endl;
 
     return 0;
 
