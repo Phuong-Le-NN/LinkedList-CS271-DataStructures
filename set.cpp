@@ -145,7 +145,8 @@ T &		Set<T>::operator[]	( int index )
 //==========================================================================
 template  <typename T>
 void		Set<T>::remove		( int item )
-{
+{   if(head == NULL)
+		return;
 	if (head->item == item)
 	{
 		Node* temp = head->next;
@@ -179,17 +180,27 @@ void		Set<T>::remove		( int item )
 template  <typename T>
 Set<T>		Set<T>::operator+	( const Set<T> &myset ) const
 {
-	Set l3 (*this);
+	
+	Set<T> l4;
 	Node * ptr2 = myset.head;
 	T i;
 	while ( ptr2 != NULL)
 	{	
+		//makes the 2nd set backwards(inserts all elements)
 		i = ptr2->item;
-		if (l3.contains(i) == false)
-			l3.insert(i);
+		l4.insert(i);
 		ptr2 = ptr2->next;	
 	}
-	return l3;
+	ptr2 = this->head;
+	while ( ptr2 != NULL)
+	{	
+		//checks 1st set for values not present in 2nd set and inserts them
+		i = ptr2->item;
+		if (l4.contains(i) == false)
+			l4.insert(i);
+		ptr2 = ptr2->next;	
+	}
+	return l4;
 }
 //==========================================================================
 // Length Method
@@ -309,7 +320,8 @@ bool        Set<T>::operator==    (const Set<T> &myset)	const
 //==========================================================================
 template  <typename T>
 bool	Set<T>::operator<=    (const Set<T> &myset)	const
-{
+{	if(head == NULL)
+		return true;
 	if(myset.cardinality() < this->cardinality()){
 		return false;
 	}
@@ -366,6 +378,10 @@ Set<T>		Set<T>::operator&	( const Set<T> &myset ){
 template  <typename T>
 Set<T>		Set<T>::operator-	( const Set<T> &myset ){
 	Set<T> ret;
+	if(head == NULL)
+	{
+		return ret;
+	}
 		Node * check = head;
 		while (check->next != NULL){
 			if(myset.contains(check->item) == 0){

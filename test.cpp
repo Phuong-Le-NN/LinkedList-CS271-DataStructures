@@ -21,6 +21,11 @@ void test_insert() {
         if (s.to_string() != "-1 2 0") {
             cout << "Incorrect insert result. Expected -1 2 0 but got : " << set_str << endl;
         }
+        s.insert('L');
+        set_str = s.to_string();
+        if (s.to_string() != "76 -1 2 0") {
+            cout << "Incorrect insert result. Expected -1 2 0 76 but got : " << set_str << endl;
+        }
     } catch (exception& e) {
         cerr << "Error inserting into set : " << e.what() << endl;
     }
@@ -29,16 +34,26 @@ void test_insert() {
 void test_remove() {
     try {
         Set<int> s;
+        s.remove(1);
+        string set_str = s.to_string();
+        if (s.to_string() != "") {
+            cout << "Incorrect remove result. Expected but got : " << set_str << endl;
+        }
         s.insert(1);
         s.insert(2);
         s.insert(3);
         s.insert(4);
         s.remove(5);
-        string set_str = s.to_string();
+        set_str = s.to_string();
         if (s.to_string() != "4 3 2 1") {
             cout << "Incorrect remove result. Expected 4 3 2 1 but got : " << set_str << endl;
         }
         s.remove(3);
+        set_str = s.to_string();
+        if(s.to_string() != "4 2 1") {
+            cout << "Incorrect remove result. Expected 4 2 1 but got : " << set_str << endl;
+        }
+        s.remove(7);
         set_str = s.to_string();
         if(s.to_string() != "4 2 1") {
             cout << "Incorrect remove result. Expected 4 2 1 but got : " << set_str << endl;
@@ -69,6 +84,14 @@ void test_cardinality() {
         c = s.cardinality();
         if(c != 3) {
             cout << "Incorrect cardinality. Expected 3 but got : " << c << endl;
+        }
+        s.remove(6);
+        s.remove(5);
+        s.remove(3);
+        s.remove(1);
+        c = s.cardinality();
+        if(c != 0) {
+            cout << "Incorrect cardinality. Expected 0 but got : " << c << endl;
         }
     } catch (exception &e) {
         cerr << "Error in determining set cardinality : " << e.what() << endl;
@@ -114,6 +137,9 @@ void test_contains() {
         if(!s.contains(2)) {
             cout << "Incorrectly identified 2 as NOT in the set " << s.to_string() << endl;
         }
+        if(s.contains('c')) {
+            cout << "Incorrectly identified c as in the set " << s.to_string() << endl;
+        }
     } catch (exception &e) {
         cerr << "Error in determining if value contained in se : " << e.what() << endl;
     }
@@ -123,6 +149,7 @@ void test_equality() {
     try {
         Set<int> s;
         Set<int> t;
+        Set<int> em;
         if(!(s==t)) {
             cout << "Empty sets should be considered equal" << endl;
         }
@@ -142,6 +169,9 @@ void test_equality() {
         if(s==t) {
             cout << "Incorrectly identified set " << s.to_string() << " as equivalent to " << t.to_string() << endl;
         }
+        if(s==em) {
+            cout << "Incorrectly identified set " << s.to_string() << " as equivalent to " << em.to_string() << endl;
+        }
     } catch (exception &e) {
         cerr << "Error in determining set equality : " << e.what() << endl;
     }
@@ -151,6 +181,7 @@ void test_subset() {
     try {
         Set<int> s;
         Set<int> t;
+        Set<int> em;
         if(!(s<=t)) {
             cout << "Set " << s.to_string() << " should be considered a subset of the set " << t.to_string() << endl;
         }
@@ -171,6 +202,9 @@ void test_subset() {
         s.insert(11);
         if(s<=t) {
             cout << "Set " << s.to_string() << " should NOT be considered a subset of the set " << t.to_string() << endl;
+        }
+        if(!(em <= s)) {
+            cout << "Set " << em.to_string() << " should be considered a subset of the set " << t.to_string() << endl;
         }
     } catch (exception& e) {
         cerr << "Error in determining subset : " << e.what() << endl;
@@ -199,6 +233,18 @@ void test_union() {
         if(set_str != "2 1 6") {
             cout << "Union of " << s.to_string() << " and " << t.to_string() << " was expected to be 2 1 6 but instead got : " << set_str << endl;
         }
+        t.insert(8);
+        t.insert(10);
+        set_str = (s+t).to_string();
+        if(set_str != "2 1 6 8 10") {
+            cout << "Union of " << s.to_string() << " and " << t.to_string() << " was expected to be 2 1 6 8 10 but instead got : " << set_str << endl;
+        }
+        s.insert(7);
+        s.insert(9);
+        set_str = (s+t).to_string();
+        if(set_str != "7 9 2 1 6 8 10") {
+            cout << "Union of " << s.to_string() << " and " << t.to_string() << " was expected to be 7 9 2 1 6 8 10 but instead got : " << set_str << endl;
+        }
     } catch (exception& e) {
         cerr << "Error in generating the union set : " << e.what() << endl;
     }
@@ -208,6 +254,7 @@ void test_intersection() {
     try {
         Set<int> s;
         Set<int> t;
+        Set<int> em;
         string set_str = (s&t).to_string();
         if(set_str != "") {
             cout << "Intersection of the empty sets should be the empty set. Instead got : " << set_str << endl;
@@ -225,6 +272,12 @@ void test_intersection() {
         if(set_str != "1 2") {
             cout << "Intersection of " << s.to_string() << " and " << t.to_string() << " was expected to be 1 2 but instead got : " << set_str << endl;
         }
+        t.insert(3);
+        t.insert(4);
+        set_str = (t&em).to_string();
+        if(set_str != "") {
+            cout << "Intersection of " << s.to_string() << " and the empty set" << " was expected to be empty set but instead got : " << set_str << endl;
+        }
     } catch (exception& e) {
         cerr << "Error in generating the intersection set : " << e.what() << endl;
     }
@@ -234,6 +287,7 @@ void test_diff() {
     try {
         Set<int> s;
         Set<int> t;
+        Set<int> em;
         string set_str = (s-t).to_string();
         if(set_str != "") {
             cout << "Difference of the empty sets should be the empty set. Instead got : " << set_str << endl;
@@ -249,7 +303,15 @@ void test_diff() {
         t.insert(1);
         set_str = (s-t).to_string();
         if(set_str != "") {
-            cout << "Set " << s.to_string() << " \\ Set " << t.to_string() << " was expected to be the empty set set but instead got : " << set_str << endl;
+            cout << "Set " << s.to_string() << " \\ Set " << t.to_string() << " was expected to be the empty set but instead got : " << set_str << endl;
+        }
+        set_str = (t-s).to_string();
+        if(set_str != "6") {
+            cout << "Set " << s.to_string() << " \\ Set " << t.to_string() << " was expected to be 6 but instead got : " << set_str << endl;
+        }
+        set_str = (t-em).to_string();
+        if(set_str != "6 2 1") {
+            cout << "Set " << s.to_string() << " \\ Set " << t.to_string() << " was expected to be 6 2 1 but instead got : " << set_str << endl;
         }
     } catch (exception& e) {
         cerr << "Error in generating the intersection set : " << e.what() << endl;
@@ -333,7 +395,7 @@ void time_test() {
     cout << "intersection time test took " << elapsed.count() << " nanoseconds" << endl;
     total+=elapsed.count();
 
-/*
+
     begin = std::chrono::high_resolution_clock::now();
     U = (S-T);
     end = std::chrono::high_resolution_clock::now();
@@ -341,7 +403,7 @@ void time_test() {
     cout << "difference time test took " << elapsed.count() << " nanoseconds" << endl;
     total+=elapsed.count();
     cout << "Total time: " << total << endl;
-*/
+
 }
 int main() {
     test_insert();
@@ -362,8 +424,8 @@ int main() {
     cout << "test_union succeeded" << endl;
     test_intersection();
     cout << "test_intersection succeeded" << endl;
-    //test_diff();
-    //cout << "test_diff succeeded" << endl;
+    test_diff();
+    cout << "test_diff succeeded" << endl;
 
     time_test();
     
