@@ -126,7 +126,7 @@ T &		Set<T>::operator[]	( int index )
 {
 	if (index >= cardinality()  || index < 0)
 	{
-		cout<<"Error: index out of range"<<endl;
+		cout << "Error: index out of range" << endl;
 		exit(1);
 	}
 	Node *ptr = head;
@@ -144,31 +144,31 @@ T &		Set<T>::operator[]	( int index )
 // Return value: none
 //==========================================================================
 template  <typename T>
-void		Set<T>::remove		( int index )
+void		Set<T>::remove		( int item )
 {
-	if (index >= cardinality() || index < 0)
+	if (head->item == item)
 	{
-		cout<< "Error: index out of range"<< endl;
-		exit(1);
+		Node* temp = head->next;
+		delete head;
+		head = temp;
+		return;
 	}
-	if (index == 0)
+	if (head->next == NULL)
 	{
-		Node *temp = head;
-		head = head->next;
-		delete temp;
+		return;
 	}
-	else
+	Node *ptr = head;
+	while (ptr->next != NULL && ptr->next->item != item)
+	{	
+		ptr = ptr->next;
+	}
+	if (ptr->next == NULL)
 	{
-		Node *ptr = head;
-		for ( int i = 0; i < index - 1; i++ )
-		{
-			ptr = ptr->next;
-		}
-	
-		Node *temp = ptr->next;
-		ptr->next = temp->next;
-		delete temp;
+		return;
 	}
+	Node *temp = ptr->next->next;
+	delete ptr->next;
+	ptr->next = temp;
 }
 //==========================================================================
 // Operator+ method
@@ -179,17 +179,15 @@ void		Set<T>::remove		( int index )
 template  <typename T>
 Set<T>		Set<T>::operator+	( const Set<T> &myset ) const
 {
-	Set l3(*this);
+	Set l3 (*this);
 	Node * ptr2 = myset.head;
 	T i;
-	
 	while ( ptr2 != NULL)
-	{
+	{	
 		i = ptr2->item;
 		if (l3.contains(i) == false)
 			l3.insert(i);
-		ptr2 = ptr2->next;
-		
+		ptr2 = ptr2->next;	
 	}
 	return l3;
 }
@@ -286,8 +284,11 @@ bool        Set<T>::operator==    (const Set<T> &myset)	const
 	if(myset.cardinality() != this->cardinality()){
 		return false;
 	}
+	if (myset.head == NULL)
+	{
+		return true;
+	}
 	Node * check = myset.head;
-	
 	while (check->next != NULL){
 		if(this->contains(check->item) == false){
 			return false;
@@ -312,8 +313,11 @@ bool	Set<T>::operator<=    (const Set<T> &myset)	const
 	if(myset.cardinality() < this->cardinality()){
 		return false;
 	}
+	if(head == NULL)
+	{
+		return true;
+	}
 	Node * check = this->head;
-	
 	while (check->next != NULL){
 		if(myset.contains(check->item) == false)
 		{
@@ -335,6 +339,10 @@ bool	Set<T>::operator<=    (const Set<T> &myset)	const
 template  <typename T>
 Set<T>		Set<T>::operator&	( const Set<T> &myset ){
 	Set<T> ret;
+	if(head == NULL)
+	{
+		return ret;
+	}
 		Node * check = head;
 		while (check->next != NULL){
 			if(myset.contains(check->item) == 1){
@@ -373,6 +381,10 @@ Set<T>		Set<T>::operator-	( const Set<T> &myset ){
 template  <typename T>
 string		Set<T>::to_string	( void ) const{
 	string s = "";
+	if (head == NULL)
+	{
+		return s;
+	}
 	Node * check = head;
 		while (check->next != NULL){
 			

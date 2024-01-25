@@ -181,7 +181,8 @@ void test_union() {
     try {
         Set<int> s;
         Set<int> t;
-        string set_str = (s+t).to_string();
+        string set_str;
+        set_str = (s+t).to_string();
         if(set_str != "") {
             cout << "Union of the empty sets should be the empty set. Instead got : " << set_str << endl;
         }
@@ -254,7 +255,7 @@ void test_diff() {
         cerr << "Error in generating the intersection set : " << e.what() << endl;
     }
 }
-/*
+
 void time_test() {
     Set<int> S;
     // TO-DO: generate large set
@@ -294,7 +295,7 @@ void time_test() {
 
     val = rand()%100000;
     begin = std::chrono::high_resolution_clock::now();
-    bool r = S.contains(val);
+    //bool r = S.contains(val);
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     cout << "contains time test took " << elapsed.count() << " nanoseconds" << endl;
@@ -302,7 +303,7 @@ void time_test() {
 
 
     begin = std::chrono::high_resolution_clock::now();
-    r = (S==T);
+    //r = (S==T);
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     cout << "equality time test took " << elapsed.count() << " nanoseconds" << endl;
@@ -310,7 +311,7 @@ void time_test() {
 
 
     begin = std::chrono::high_resolution_clock::now();
-    r = (S<=T);
+    //r = (S<=T);
     end = std::chrono::high_resolution_clock::now();
     elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     cout << "subset time test took " << elapsed.count() << " nanoseconds" << endl;
@@ -341,20 +342,29 @@ void time_test() {
     total+=elapsed.count();
     cout << "Total time: " << total << endl;
 }
-*/
 int main() {
     test_insert();
+    cout << "test_insert succeeded" << endl;
     test_remove();
+    cout << "test_remove succeeded" << endl;
     test_cardinality();
+    cout << "test_cardinality succeeded" << endl;
     test_empty();
+    cout << "test_empty succeeded" << endl;
     test_contains();
+    cout << "test_contains succeeded" << endl;
     test_equality();
+    cout << "test_equality succeeded" << endl;
     test_subset();
+    cout << "test_subset succeeded" << endl;
     test_union();
+    cout << "test_union succeeded" << endl;
     test_intersection();
+    cout << "test_intersection succeeded" << endl;
     test_diff();
+    cout << "test_diff succeeded" << endl;
 
-    //time_test();
+    time_test();
     
     cout << "Testing completed" << endl;
     
