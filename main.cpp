@@ -66,6 +66,8 @@ int main ( void )
     int result; 
     result = s2 <= s1;
     cout << "s2 <= l1: " << result << endl;
+    cout << "s2 <= l1: " << s7.to_string() << endl;
+    
 
     return 0;
 

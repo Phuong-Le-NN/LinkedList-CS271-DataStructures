@@ -264,10 +264,10 @@ bool		Set<T>::contains (const T &myitem)	const
 				return true;
 			}
 			check = check->next;	
-			if(check->item == myitem){
+		}
+		if(check->item == myitem){
 				return true;
 			}
-		}
 		
 		return false;
 	}
@@ -369,4 +369,17 @@ Set<T>		Set<T>::operator-	( const Set<T> &myset ){
 				ret.insert(check->item);
 			}
 	return ret;
+}
+template  <typename T>
+string		Set<T>::to_string	( void ) const{
+	string s = "";
+	Node * check = head;
+		while (check->next != NULL){
+			s = s + check->item + " ";
+			check = check->next;
+		}
+		
+		s = s + check->item;
+
+	return s;
 }
