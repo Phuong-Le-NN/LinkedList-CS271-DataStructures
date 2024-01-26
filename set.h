@@ -34,7 +34,7 @@ Set<T>		operator=	( const Set<T> &myset );
 string		to_string	( void ) const;	
 void		insert		( const T &item	);
 T &		operator[]	( int index );
-void		remove		( int index );
+void		remove		(T item);
 Set<T>		operator+	( const Set<T> &myset ) const;
 int		cardinality		( void ) const;
 bool		empty		( void ) const;
