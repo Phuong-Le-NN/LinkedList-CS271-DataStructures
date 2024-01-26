@@ -10,7 +10,7 @@
 #include "set.h"
 #include <typeinfo>
 #include <sstream>      // std::stringstream
-
+#include <typeinfo>
 using namespace std;
 
 //------------------------------------
@@ -318,6 +318,8 @@ bool		Set<T>::contains (const T &myitem)	const
 template  <typename T>
 bool        Set<T>::operator==    (const Set<T> &myset)	const
 {
+	
+	
 	if(myset.cardinality() != this->cardinality()){ //accounts for mismatched length and avoids out of bounds error
 		return false;
 	}
@@ -325,6 +327,7 @@ bool        Set<T>::operator==    (const Set<T> &myset)	const
 	{
 		return true;
 	}
+	
 	Node * check = myset.head;
 	while (check->next != NULL){
 		if(this->contains(check->item) == false){//iterate through list and check if each item is in other list

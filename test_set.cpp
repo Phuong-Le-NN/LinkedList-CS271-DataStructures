@@ -232,6 +232,14 @@ void test_equality() {
         if(s==em) {
             cout << "Incorrectly identified set " << s.to_string() << " as equivalent to " << em.to_string() << endl;
         }
+        Set<string> l;
+        Set<string> l2;
+        l.insert("Hello");
+        l.insert("World");
+        l2.insert("Good");
+        l2.insert("World");
+        
+       
     } catch (exception &e) {
         cerr << "Error in determining set equality : " << e.what() << endl;
     }
@@ -264,7 +272,10 @@ void test_subset() {
             cout << "Set " << s.to_string() << " should NOT be considered a subset of the set " << t.to_string() << endl;
         }
         if(!(em <= s)) {
-            cout << "Set " << em.to_string() << " should be considered a subset of the set " << t.to_string() << endl;
+            cout << "Set " << em.to_string() << " should be considered a subset of the set " << s.to_string() << endl;
+        }
+        if(!(t <= s)) {
+            cout << "Set " << t.to_string() << " should be considered a subset of the set " << s.to_string() << endl;
         }
     } catch (exception& e) {
         cerr << "Error in determining subset : " << e.what() << endl;
@@ -305,6 +316,16 @@ void test_union() {
         if(set_str != "7 9 2 1 6 8 10") {
             cout << "Union of " << s.to_string() << " and " << t.to_string() << " was expected to be 7 9 2 1 6 8 10 but instead got : " << set_str << endl;
         }
+        Set<string> l;
+        Set<string> l2;
+        l.insert("Hello");
+        l.insert("World");
+        l2.insert("Good");
+        l2.insert("World");
+        set_str = (l+l2).to_string();
+        if(set_str != "Hello Good World") {
+            cout << "Set " << l.to_string() << " + Set " << l2.to_string() << " was expected to be Hello Good World but instead got : " << set_str << endl;
+        }
     } catch (exception& e) {
         cerr << "Error in generating the union set : " << e.what() << endl;
     }
@@ -338,6 +359,16 @@ void test_intersection() {
         if(set_str != "") {
             cout << "Intersection of " << s.to_string() << " and the empty set" << " was expected to be empty set but instead got : " << set_str << endl;
         }
+        Set<string> l;
+        Set<string> l2;
+        l.insert("Hello");
+        l.insert("World");
+        l2.insert("Good");
+        l2.insert("World");
+        set_str = (l&l2).to_string();
+        if(set_str != "World") {
+            cout << "Set " << l.to_string() << " & Set " << l2.to_string() << " was expected to be World but instead got : " << set_str << endl;
+        }
     } catch (exception& e) {
         cerr << "Error in generating the intersection set : " << e.what() << endl;
     }
@@ -349,7 +380,7 @@ void test_diff() {
         Set<int> t;
         Set<int> em;
         string set_str = (s-t).to_string();
-        if(set_str != "") {
+        if(set_str != "") { //check for 2 empty sets
             cout << "Difference of the empty sets should be the empty set. Instead got : " << set_str << endl;
         }
         s.insert(1);
@@ -373,6 +404,17 @@ void test_diff() {
         if(set_str != "6 2 1") {
             cout << "Set " << s.to_string() << " \\ Set " << t.to_string() << " was expected to be 6 2 1 but instead got : " << set_str << endl;
         }
+        Set<string> l;
+        Set<string> l2;
+        l.insert("Hello");
+        l.insert("World");
+        l2.insert("Good");
+        l2.insert("Place");
+        set_str = (l-l2).to_string();
+        if(set_str != "Hello World") {
+            cout << "Set " << l.to_string() << " \\ Set " << l2.to_string() << " was expected to be Hello World but instead got : " << set_str << endl;
+        }
+
     } catch (exception& e) {
         cerr << "Error in generating the intersection set : " << e.what() << endl;
     }
