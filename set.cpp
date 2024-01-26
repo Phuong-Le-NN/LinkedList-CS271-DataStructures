@@ -1,7 +1,7 @@
 //==================================================
-// 
+// Phuong Le and Kian Jennings
 // Set.cpp
-// December 2023
+// Jan 2024
 // The method definitions for the Linked Set Class
 //==================================================
 

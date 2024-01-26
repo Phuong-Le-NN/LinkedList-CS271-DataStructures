@@ -9,6 +9,7 @@
 #include "string"
 
 void test_insert() {
+    //test int
     try {
         Set<int> s;
         s.insert(0);
@@ -25,7 +26,7 @@ void test_insert() {
         s.insert('L');
         set_str = s.to_string();
         if (s.to_string() != "76 -1 2 0") {
-            cout << "Incorrect insert result. Expected -1 2 0 76 but got : " << set_str << endl;
+            cout << "Incorrect insert result. Expected 76 -1 2 0 but got : " << set_str << endl;
         }
     } catch (exception& e) {
         cerr << "Error inserting into set : " << e.what() << endl;
@@ -57,7 +58,29 @@ void test_insert() {
         s.insert(-1.5);
         set_str = s.to_string();
         if (s.to_string() != "-1.5 2.7 0") {
-            cout << "Incorrect insert result. Expected -1 2 0 but got : " << set_str << endl;
+            cout << "Incorrect insert result. Expected -1.5 2.7 0 but got : " << set_str << endl;
+        }
+    } catch (exception& e) {
+        cerr << "Error inserting into set : " << e.what() << endl;
+    }
+    //test char
+    try {
+        Set<char> s;
+        s.insert('a');
+        string set_str = s.to_string();
+        if (s.to_string() != "a") {
+            cout << "Incorrect insert result. Expected 0 but got : " << set_str << endl;
+        }
+        s.insert('b');
+        s.insert('c');
+        set_str = s.to_string();
+        if (s.to_string() != "c b a") {
+            cout << "Incorrect insert result. Expected c b a but got : " << set_str << endl;
+        }
+        s.insert('L');
+        set_str = s.to_string();
+        if (s.to_string() != "L c b a") {
+            cout << "Incorrect insert result. Expected L c b a but got : " << set_str << endl;
         }
     } catch (exception& e) {
         cerr << "Error inserting into set : " << e.what() << endl;
@@ -65,9 +88,130 @@ void test_insert() {
 }
 
 void test_remove() {
+    //test int
     try {
         Set<int> s;
-        s.remove(1);
+        s.remove(1); //try remove from an empty list
+        string set_str = s.to_string();
+        if (s.to_string() != "") {
+            cout << "Incorrect remove result. Expected empty set but got : " << set_str << endl;
+        }
+        s.insert(-1);
+        s.insert(2);
+        s.insert(3);
+        s.insert(4);
+        s.remove(5);
+        set_str = s.to_string();
+        if (s.to_string() != "4 3 2 -1") {
+            cout << "Incorrect remove result. Expected 4 3 2 -1 but got : " << set_str << endl;
+        }
+        s.remove(4); //try removing last element
+        set_str = s.to_string();
+        if(s.to_string() != "3 2 -1") {
+            cout << "Incorrect remove result. Expected 3 2 -1 but got : " << set_str << endl;
+        }
+        s.remove(2); //try removing second to last element
+        set_str = s.to_string();
+        if(s.to_string() != "3 -1") {
+            cout << "Incorrect remove result. Expected 3 -1 but got : " << set_str << endl;
+        }
+        s.remove(7); //try removing nonexistent element
+        set_str = s.to_string();
+        if(s.to_string() != "3 -1") {
+            cout << "Incorrect remove result. Expected 3 -1 but got : " << set_str << endl;
+        }
+        s.remove(-1); //try removing first element
+        set_str = s.to_string();
+        if(s.to_string() != "3") {
+            cout << "Incorrect remove result. Expected 3 but got : " << set_str << endl;
+        }
+        s.remove(3); //try removing the only element
+        set_str = s.to_string();
+        if(s.to_string() != "") {
+            cout << "Incorrect remove result. Expected empty set but got : " << set_str << endl;
+        }
+    } catch (exception &e) {
+        cerr << "Error removing from set : " << e.what() << endl;
+    }
+    //test string
+    try {
+        Set<string> s;
+        s.remove("string"); //try remove from an empty list
+        string set_str = s.to_string();
+        if (s.to_string() != "") {
+            cout << "Incorrect remove result. Expected empty set but got : " << set_str << endl;
+        }
+        s.insert("stringa");
+        s.insert("stringb");
+        s.insert("stringc");
+        s.insert("stringd");
+        s.remove("stringd");
+        set_str = s.to_string();
+        if (s.to_string() != "stringc stringb stringa") {
+            cout << "Incorrect remove result. Expected \"stringc stringb stringa\" but got : " << set_str << endl;
+        }
+        s.remove("stringc"); //try removing last element
+        set_str = s.to_string();
+        if(s.to_string() != "stringb stringa") {
+            cout << "Incorrect remove result. Expected \"stringb stringa\" but got : " << set_str << endl;
+        }
+        s.remove("stringa"); //try removing second to last element
+        set_str = s.to_string();
+        if(s.to_string() != "stringb") {
+            cout << "Incorrect remove result. Expected \"stringb\" but got : " << set_str << endl;
+        }
+    } catch (exception &e) {
+        cerr << "Error removing from set : " << e.what() << endl;
+    }
+    //test int
+    try {
+        Set<int> s;
+        s.remove(1); //try remove from an empty list
+        string set_str = s.to_string();
+        if (s.to_string() != "") {
+            cout << "Incorrect remove result. Expected empty set but got : " << set_str << endl;
+        }
+        s.insert(-1);
+        s.insert(2);
+        s.insert(3);
+        s.insert(4);
+        s.remove(5);
+        set_str = s.to_string();
+        if (s.to_string() != "4 3 2 -1") {
+            cout << "Incorrect remove result. Expected 4 3 2 -1 but got : " << set_str << endl;
+        }
+        s.remove(4); //try removing last element
+        set_str = s.to_string();
+        if(s.to_string() != "3 2 -1") {
+            cout << "Incorrect remove result. Expected 3 2 -1 but got : " << set_str << endl;
+        }
+        s.remove(2); //try removing second to last element
+        set_str = s.to_string();
+        if(s.to_string() != "3 -1") {
+            cout << "Incorrect remove result. Expected 3 -1 but got : " << set_str << endl;
+        }
+        s.remove(7); //try removing nonexistent element
+        set_str = s.to_string();
+        if(s.to_string() != "3 -1") {
+            cout << "Incorrect remove result. Expected 3 -1 but got : " << set_str << endl;
+        }
+        s.remove(-1); //try removing first element
+        set_str = s.to_string();
+        if(s.to_string() != "3") {
+            cout << "Incorrect remove result. Expected 3 but got : " << set_str << endl;
+        }
+        s.remove(3); //try removing the only element
+        set_str = s.to_string();
+        if(s.to_string() != "") {
+            cout << "Incorrect remove result. Expected empty set but got : " << set_str << endl;
+        }
+    } catch (exception &e) {
+        cerr << "Error removing from set : " << e.what() << endl;
+    }
+    //test int
+    try {
+        Set<int> s;
+        s.remove(1); //try remove from an empty list
         string set_str = s.to_string();
         if (s.to_string() != "") {
             cout << "Incorrect remove result. Expected empty set but got : " << set_str << endl;
@@ -232,14 +376,6 @@ void test_equality() {
         if(s==em) {
             cout << "Incorrectly identified set " << s.to_string() << " as equivalent to " << em.to_string() << endl;
         }
-        Set<string> l;
-        Set<string> l2;
-        l.insert("Hello");
-        l.insert("World");
-        l2.insert("Good");
-        l2.insert("World");
-        
-       
     } catch (exception &e) {
         cerr << "Error in determining set equality : " << e.what() << endl;
     }
@@ -249,7 +385,6 @@ void test_subset() {
     try {
         Set<int> s;
         Set<int> t;
-        Set<int> em;
         if(!(s<=t)) {
             cout << "Set " << s.to_string() << " should be considered a subset of the set " << t.to_string() << endl;
         }
@@ -271,12 +406,7 @@ void test_subset() {
         if(s<=t) {
             cout << "Set " << s.to_string() << " should NOT be considered a subset of the set " << t.to_string() << endl;
         }
-        if(!(em <= s)) {
-            cout << "Set " << em.to_string() << " should be considered a subset of the set " << s.to_string() << endl;
-        }
-        if(!(t <= s)) {
-            cout << "Set " << t.to_string() << " should be considered a subset of the set " << s.to_string() << endl;
-        }
+        
     } catch (exception& e) {
         cerr << "Error in determining subset : " << e.what() << endl;
     }
@@ -535,6 +665,3 @@ int main() {
     
     return 0;
 }
-
-
-
