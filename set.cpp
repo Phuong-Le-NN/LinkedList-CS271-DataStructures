@@ -319,6 +319,10 @@ bool        Set<T>::operator==    (const Set<T> &myset)	const
 	if(myset.cardinality() != this->cardinality()){ //accounts for mismatched length and avoids out of bounds error
 		return false;
 	}
+	if(myset.head == NULL)
+	{
+		return true;
+	}
 	Node * check = myset.head;
 	while (check->next != NULL){
 		if(this->contains(check->item) == false){//iterate through list and check if each item is in other list
