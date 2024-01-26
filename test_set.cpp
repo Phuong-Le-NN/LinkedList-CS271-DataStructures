@@ -1,11 +1,12 @@
-//
-//  test_set_example.cpp
+//	
+//  test_set.cpp
 //  CS 271 Set Project: Example Test File
-//
-//  Created by Dr. Stacey Truex
+//  Kian Jennings and Phuong Le
+//  Format and time_test created by Dr. Stacey Truex
 //
 #include <iostream>
 #include "set.cpp"
+#include "string"
 
 void test_insert() {
     try {
@@ -29,6 +30,38 @@ void test_insert() {
     } catch (exception& e) {
         cerr << "Error inserting into set : " << e.what() << endl;
     }
+    //test string
+        try {
+        Set<string> s;
+        s.insert("string1");
+        s.insert("string2");
+        s.insert("string3");
+        
+        string set_str = s.to_string();
+        if (set_str != "string3 string2 string1") {
+            cout << "Incorrect insert result for string. Expected string3 string2 string1 but got : " << set_str << endl;
+        }
+        
+    } catch (exception& e) {
+        cerr << "Error inserting string into set : " << e.what() << endl;
+    }
+    //test float
+    try {
+        Set<float> s;
+        s.insert(0);
+        string set_str = s.to_string();
+        if (s.to_string() != "0") {
+            cout << "Incorrect insert result. Expected 0 but got : " << set_str << endl;
+        }
+        s.insert(2.7);
+        s.insert(-1.5);
+        set_str = s.to_string();
+        if (s.to_string() != "-1.5 2.7 0") {
+            cout << "Incorrect insert result. Expected -1 2 0 but got : " << set_str << endl;
+        }
+    } catch (exception& e) {
+        cerr << "Error inserting into set : " << e.what() << endl;
+    }
 }
 
 void test_remove() {
@@ -37,26 +70,41 @@ void test_remove() {
         s.remove(1);
         string set_str = s.to_string();
         if (s.to_string() != "") {
-            cout << "Incorrect remove result. Expected but got : " << set_str << endl;
+            cout << "Incorrect remove result. Expected empty set but got : " << set_str << endl;
         }
-        s.insert(1);
+        s.insert(-1);
         s.insert(2);
         s.insert(3);
         s.insert(4);
         s.remove(5);
         set_str = s.to_string();
-        if (s.to_string() != "4 3 2 1") {
-            cout << "Incorrect remove result. Expected 4 3 2 1 but got : " << set_str << endl;
+        if (s.to_string() != "4 3 2 -1") {
+            cout << "Incorrect remove result. Expected 4 3 2 -1 but got : " << set_str << endl;
         }
-        s.remove(3);
+        s.remove(4); //try removing last element
         set_str = s.to_string();
-        if(s.to_string() != "4 2 1") {
-            cout << "Incorrect remove result. Expected 4 2 1 but got : " << set_str << endl;
+        if(s.to_string() != "3 2 -1") {
+            cout << "Incorrect remove result. Expected 3 2 -1 but got : " << set_str << endl;
         }
-        s.remove(7);
+        s.remove(2); //try removing second to last element
         set_str = s.to_string();
-        if(s.to_string() != "4 2 1") {
-            cout << "Incorrect remove result. Expected 4 2 1 but got : " << set_str << endl;
+        if(s.to_string() != "3 -1") {
+            cout << "Incorrect remove result. Expected 3 -1 but got : " << set_str << endl;
+        }
+        s.remove(7); //try removing nonexistent element
+        set_str = s.to_string();
+        if(s.to_string() != "3 -1") {
+            cout << "Incorrect remove result. Expected 3 -1 but got : " << set_str << endl;
+        }
+        s.remove(-1); //try removing first element
+        set_str = s.to_string();
+        if(s.to_string() != "3") {
+            cout << "Incorrect remove result. Expected 3 but got : " << set_str << endl;
+        }
+        s.remove(3); //try removing the only element
+        set_str = s.to_string();
+        if(s.to_string() != "") {
+            cout << "Incorrect remove result. Expected empty set but got : " << set_str << endl;
         }
     } catch (exception &e) {
         cerr << "Error removing from set : " << e.what() << endl;
@@ -71,6 +119,10 @@ void test_cardinality() {
             cout << "Incorrect cardinality. Expected 0 but got : " << c << endl;
         }
         s.insert(6);
+        c = s.cardinality();
+        if(c != 1) {
+            cout << "Incorrect cardinality. Expected 1 but got : " << c << endl;
+        }
         s.insert(5);
         s.insert(4);
         s.insert(3);
@@ -105,10 +157,10 @@ void test_empty() {
             cout << "Empty set identified as non-empty" << endl;
         }
         s.insert(1);
-        s.insert(2);
         if(s.empty()) {
             cout << "Non-empty set identified as empty" << endl;
         }
+        s.insert(2);
         s.remove(2);
         if(s.empty()) {
             cout << "Non-empty set identified as empty" << endl;
@@ -125,10 +177,17 @@ void test_empty() {
 void test_contains() {
     try {
         Set<int> s;
+        if(s.contains(5))//test empty set 
+        {
+            cout << "Incorrectly identified 5 as in the set " << s.to_string() << endl;
+        }
+        s.insert(1); //test set with 1 element
         if(s.contains(5)) {
             cout << "Incorrectly identified 5 as in the set " << s.to_string() << endl;
         }
-        s.insert(1);
+        if(!s.contains(1)) {
+            cout << "Incorrectly identified existing element as NOT in the set " << s.to_string() << endl;
+        }
         s.insert(2);
         s.insert(3);
         if(s.contains(5)) {
@@ -137,8 +196,9 @@ void test_contains() {
         if(!s.contains(2)) {
             cout << "Incorrectly identified 2 as NOT in the set " << s.to_string() << endl;
         }
-        if(s.contains('c')) {
-            cout << "Incorrectly identified c as in the set " << s.to_string() << endl;
+        s.insert('z'); //test if program can corece char into int when inserting and differentiate char and int when check contain
+        if(!s.contains('z')) {
+            cout << "Incorrectly identified z as NOT in the set " << s.to_string() << endl;
         }
     } catch (exception &e) {
         cerr << "Error in determining if value contained in se : " << e.what() << endl;
@@ -154,13 +214,13 @@ void test_equality() {
             cout << "Empty sets should be considered equal" << endl;
         }
         s.insert(1);
-        s.insert(2);
-        s.insert(3);
         if(s==t) {
             cout << "Incorrectly identified set " << s.to_string() << " as equivalent to " << t.to_string() << endl;
         }
+        s.insert('z');
+        s.insert(3);
         t.insert(1);
-        t.insert(2);
+        t.insert(122);
         t.insert(3);
         if(!(s==t)) {
             cout << "Sets " << s.to_string() << " and " << t.to_string() << " should be considered equal." << endl;

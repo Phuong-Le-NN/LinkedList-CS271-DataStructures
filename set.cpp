@@ -8,6 +8,8 @@
 #include <string>
 #include <iostream>
 #include "set.h"
+#include <typeinfo>
+#include <sstream>      // std::stringstream
 
 using namespace std;
 
@@ -427,18 +429,26 @@ Set<T>		Set<T>::operator-	( const Set<T> &myset ){
 template  <typename T>
 string		Set<T>::to_string	( void ) const{
 	string s = "";
+	string temp;
 	if (head == NULL)
 	{
 		return s;
 	}
+	
+
 	Node * check = head;
-		while (check->next != NULL){
-			
-			s = s + std::to_string(check->item) + " "; //typecast to avoid errors
+		while (check->next != NULL)
+		{
+			std::stringstream ss;
+			ss << check->item;
+			ss >> temp;
+			s = s + temp + " "; //typecast to avoid errors
 			check = check->next;
 		}
-		
-		s = s + std::to_string(check->item);
+		std::stringstream ss;
+		ss << check->item;
+		ss >> temp;
+		s = s + temp;
 
 	return s;
 }

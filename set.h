@@ -1,6 +1,6 @@
 //========================================================
-// 
-// November 2023
+// Kian Jennings and Phuong Le
+// January 2024
 // Set.h
 // This file contains the Set class declaration.  
 //========================================================
